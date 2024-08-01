@@ -6,6 +6,7 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {AuthService} from "./auth/auth.service";
 import {AuthGuard} from "./auth/auth.guard";
+import {TrainingService} from "./training/training.service";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(),
     provideAnimationsAsync(),
     AuthService,
-    AuthGuard
+    AuthGuard,
+    TrainingService
   ]
 };

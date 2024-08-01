@@ -1,9 +1,13 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {MatCard, MatCardModule} from "@angular/material/card";
+import {Component} from '@angular/core';
+import {MatCardModule} from "@angular/material/card";
 import {FlexModule} from "@angular/flex-layout";
 import {MatButton} from "@angular/material/button";
 import {MatFormField} from "@angular/material/form-field";
-import {MatOption, MatSelect, MatSelectModule} from "@angular/material/select";
+import {MatSelectModule} from "@angular/material/select";
+import {TrainingService} from "../training.service";
+import {Exercise} from "../exercise.model";
+import {NgFor} from "@angular/common";
+import {FormsModule, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-new-training',
@@ -13,15 +17,24 @@ import {MatOption, MatSelect, MatSelectModule} from "@angular/material/select";
     FlexModule,
     MatButton,
     MatFormField,
-    MatSelectModule
+    MatSelectModule,
+    NgFor,
+    FormsModule
   ],
   templateUrl: './new-training.component.html',
   styleUrl: './new-training.component.css'
 })
 export class NewTrainingComponent {
-  @Output() trainingStart = new EventEmitter<void>();
+  exercises: Exercise[] = [];
 
-  onStartTraining() {
-    this.trainingStart.emit();
+  constructor(private  trainingService: TrainingService) {
+  }
+
+  onStartTraining(form: NgForm) {
+    this.trainingService.startExercise(form.value.exercise);
+  }
+
+  ngOnInit() {
+    this.exercises = this.trainingService.getAvailableExercises();
   }
 }
